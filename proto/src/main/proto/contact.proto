@@ -41,11 +41,27 @@ message Count {
 service ContactService {
     rpc GetPerson(ById) returns (Person) {
       option (google.api.http) = {
-        get: "/lookup"
+        get: "/contact/{id}"
       };
     };
-    rpc AddPerson(Person) returns (ById);
-    rpc RemovePerson(ById) returns (Person);
-    rpc UpdatePerson(Person) returns (google.protobuf.Empty);
-    rpc WatchPeople(Count) returns (stream Person);
+    rpc AddPerson(Person) returns (ById) {
+      option (google.api.http) = {
+        post: "/contact"
+      };
+    }
+    rpc RemovePerson(ById) returns (Person) {
+      option (google.api.http) = {
+        delete: "/contact/{id}"
+      };
+    };
+    rpc UpdatePerson(Person) returns (google.protobuf.Empty) {
+      option (google.api.http) = {
+        put: "/contact/{id}"
+      };
+    };
+    rpc WatchPeople(Count) returns (stream Person) {
+      option (google.api.http) = {
+        get: "/contact/watch/{count}"
+      };
+    };
 }

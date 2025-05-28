@@ -34,7 +34,7 @@ static_resources:
               - "*"
               routes:
               - match:
-                  prefix: "/demo.ContactService"
+                  prefix: "/"
                 route:
                   cluster: grpc
                   timeout: 300s
