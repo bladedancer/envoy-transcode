@@ -1,5 +1,6 @@
 package com.matthews.poc.transcode;
 
+import com.matthews.poc.transcode.protos.AddressServiceGrpc;
 import com.matthews.poc.transcode.protos.ContactServiceGrpc;
 import picocli.CommandLine;
 
@@ -12,6 +13,13 @@ public class BaseCommand {
 
     protected ContactServiceGrpc.ContactServiceBlockingStub getContactService() {
         return ContactServiceGrpc.newBlockingStub(
+                io.grpc.ManagedChannelBuilder.forAddress(hostname, port)
+                        .usePlaintext()
+                        .build());
+    }
+
+    protected AddressServiceGrpc.AddressServiceBlockingStub getAddressService() {
+        return AddressServiceGrpc.newBlockingStub(
                 io.grpc.ManagedChannelBuilder.forAddress(hostname, port)
                         .usePlaintext()
                         .build());

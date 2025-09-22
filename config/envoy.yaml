@@ -33,16 +33,31 @@ static_resources:
               domains:
               - "*"
               routes:
-              - match:
-                  prefix: "/"
-                route:
-                  cluster: grpc
-                  timeout: 300s
+                - match:
+                    headers:
+                      - name: ":method"
+                        string_match:
+                          exact: "POST"
+                    safe_regex:
+                      "regex": "^\\Q/demo.ContactService/\\E[^/]+$"
+                  route:
+                    cluster: grpc
+                    timeout: 300s
+                - match:
+                    headers:
+                      - name: ":method"
+                        string_match:
+                          exact: "POST"
+                    safe_regex:
+                      "regex": "^\\Q/demo.AddressService/\\E[^/]+$"
+                  route:
+                    cluster: grpc
+                    timeout: 300s
           http_filters:
-          - name: envoy.filters.http.grpc_json_transcoder
+          - name: contact.grpc_json_transcoder
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
-              proto_descriptor: ./config/proto.pb
+              proto_descriptor: ./config/contact.pb
               services:
                 - demo.ContactService
               print_options:
@@ -50,6 +65,19 @@ static_resources:
                 always_print_primitive_fields: true
                 always_print_enums_as_ints: false
                 preserve_proto_field_names: false
+
+          - name: address.grpc_json_transcoder
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
+              proto_descriptor: ./config/address.pb
+              services:
+                - demo.AddressService
+              print_options:
+                add_whitespace: true
+                always_print_primitive_fields: true
+                always_print_enums_as_ints: false
+                preserve_proto_field_names: false
+
 
           - name: envoy.filters.http.router
             typed_config:

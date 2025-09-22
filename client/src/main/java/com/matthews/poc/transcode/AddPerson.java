@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-    name = "add",
+    name = "add-person",
     description = "Adds a person to the system",
     mixinStandardHelpOptions = true,
     version = "1.0")

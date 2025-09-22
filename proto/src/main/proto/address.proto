@@ -9,53 +9,50 @@ import "types.proto";
 
 option java_multiple_files = true;
 option java_package = "com.matthews.poc.transcode.protos";
-option java_outer_classname = "ContactProtos";
+option java_outer_classname = "AddressProtos";
 
-message Person {
+message Address {
   string name = 1;
   int32 id = 2;  // Unique ID number for this person.
-  string email = 3;
 
-  enum PhoneType {
-    MOBILE = 0;
-    HOME = 1;
-    WORK = 2;
-  }
-
-  message PhoneNumber {
+  message Postal {
     string number = 1;
-    PhoneType type = 2;
+    string street = 2;
+    string city = 3;
+    string state = 4;
+    string zip = 5;
+    string country = 6;
   }
 
-  repeated PhoneNumber phones = 4;
+  Postal home = 4;
 
   google.protobuf.Timestamp last_updated = 5;
 }
 
-service ContactService {
-    rpc GetPerson(ById) returns (Person) {
+service AddressService {
+    rpc GetAddress(ById) returns (Address) {
       option (google.api.http) = {
-        get: "/contact/{id}"
+        get: "/address/{id}"
       };
     };
-    rpc AddPerson(Person) returns (ById) {
+    rpc AddAddress(Address) returns (ById) {
       option (google.api.http) = {
-        post: "/contact"
+        post: "/address"
       };
     }
-    rpc RemovePerson(ById) returns (Person) {
+    rpc RemoveAddress(ById) returns (Address) {
       option (google.api.http) = {
-        delete: "/contact/{id}"
+        delete: "/address/{id}"
       };
     };
-    rpc UpdatePerson(Person) returns (google.protobuf.Empty) {
+    rpc UpdateAddress(Address) returns (google.protobuf.Empty) {
       option (google.api.http) = {
-        put: "/contact/{id}"
+        put: "/address/{id}"
       };
     };
-    rpc WatchPeople(Count) returns (stream Person) {
+    rpc WatchAddress(Count) returns (stream Address) {
       option (google.api.http) = {
-        get: "/contact/watch/{count}"
+        get: "/address/watch/{count}"
       };
     };
 }

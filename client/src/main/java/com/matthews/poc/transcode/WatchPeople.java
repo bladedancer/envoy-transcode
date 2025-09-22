@@ -8,7 +8,7 @@ import picocli.CommandLine;
 import java.util.Iterator;
 
 @CommandLine.Command(
-        name = "watch",
+        name = "watch-people",
         description = "Listens for changes",
         mixinStandardHelpOptions = true,
         version = "1.0")

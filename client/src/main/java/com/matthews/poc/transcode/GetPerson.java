@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        name = "get",
+        name = "get-person",
         description = "Get a person from the system",
         mixinStandardHelpOptions = true,
         version = "1.0")

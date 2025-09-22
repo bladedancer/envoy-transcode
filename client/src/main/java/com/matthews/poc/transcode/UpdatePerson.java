@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        name = "update",
+        name = "update-person",
         description = "Updates a person to the system",
         mixinStandardHelpOptions = true,
         version = "1.0")

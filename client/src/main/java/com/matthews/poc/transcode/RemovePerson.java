@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        name = "remove",
+        name = "remove-person",
         description = "Removes a person from the system",
         mixinStandardHelpOptions = true,
         version = "1.0")
