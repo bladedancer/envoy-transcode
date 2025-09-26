@@ -8,9 +8,14 @@ Run the server:
     
     java -jar server/target/server-1.0.0.jar
 
-Run Envoy:
+Run Envoy (func-e hasn't got latest so not always applicable):
 
     func-e run --config-file=config/envoy.yaml
+
+Run Envoy in docker:
+
+    docker run --rm --net host --name envoy-transcode -v "$(pwd)/config:/config" \
+      envoyproxy/envoy:v1.34.4 envoy -c /config/envoy.yaml
 
 Call from client (no envoy):
 
@@ -28,6 +33,4 @@ Test with curl:
 
 Envoy debug log
 
-    curl 'http://localhost:9901/logging' \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    --data-raw 'paths=&level=debug'
+    curl -X POST http://localhost:9901/logging?level=error && curl -X POST http://localhost:9901/logging?paths=http2:debug,connection:debug,router:debug
