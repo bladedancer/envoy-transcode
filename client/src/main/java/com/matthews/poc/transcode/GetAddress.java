@@ -1,7 +1,9 @@
 package com.matthews.poc.transcode;
 
+import com.google.protobuf.Any;
 import com.matthews.poc.transcode.protos.Address;
 import com.matthews.poc.transcode.protos.ById;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
 
@@ -16,15 +18,19 @@ public class GetAddress extends BaseCommand implements Runnable {
     Integer id;
 
     @Override
+    @SneakyThrows
     public void run() {
-        Address address = getAddressService().getAddress(ById.newBuilder().setId(id).build());
-        if (address == null) {
-            log.error("No address found with id: {}", id);
-        } else {
+        Any any = getAnyService().getAny(ById.newBuilder().setId(id).build());
+        if (any.is(Address.class)) {
+            Address address = any.unpack(Address.class);
             log.info("Address: {}, {}, {}, {}, {}, {}", address.getName(),
                     address.getHome().getNumber(), address.getHome().getStreet(),
                     address.getHome().getCity(), address.getHome().getZip(),
                     address.getHome().getCountry());
+        } else if (any != null) {
+            log.error("Id {} is not an address", id);
+        } else {
+            log.error("No address found with id: {}", id);
         }
     }
 }

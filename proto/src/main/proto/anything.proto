@@ -1,0 +1,43 @@
+syntax = "proto3";
+package demo;
+
+import "google/api/annotations.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+
+import "types.proto";
+
+import "address.proto";
+import "contact.proto";
+
+option java_multiple_files = true;
+option java_package = "com.matthews.poc.transcode.protos";
+option java_outer_classname = "AnyProtos";
+
+service AnyService {
+    rpc GetAny(ById) returns (google.protobuf.Any) {
+      option (google.api.http) = {
+        get: "/any/{id}"
+      };
+    };
+    rpc AddAny(google.protobuf.Any) returns (ById) {
+      option (google.api.http) = {
+        post: "/any"
+      };
+    }
+    rpc RemoveAny(ById) returns (google.protobuf.Any) {
+      option (google.api.http) = {
+        delete: "/any/{id}"
+      };
+    };
+    rpc UpdateAny(google.protobuf.Any) returns (google.protobuf.Empty) {
+      option (google.api.http) = {
+        put: "/any/{id}"
+      };
+    };
+    rpc WatchAny(Count) returns (stream google.protobuf.Any) {
+      option (google.api.http) = {
+        get: "/any/watch/{count}"
+      };
+    };
+}

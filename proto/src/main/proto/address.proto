@@ -28,31 +28,3 @@ message Address {
 
   google.protobuf.Timestamp last_updated = 5;
 }
-
-service AddressService {
-    rpc GetAddress(ById) returns (Address) {
-      option (google.api.http) = {
-        get: "/address/{id}"
-      };
-    };
-    rpc AddAddress(Address) returns (ById) {
-      option (google.api.http) = {
-        post: "/address"
-      };
-    }
-    rpc RemoveAddress(ById) returns (Address) {
-      option (google.api.http) = {
-        delete: "/address/{id}"
-      };
-    };
-    rpc UpdateAddress(Address) returns (google.protobuf.Empty) {
-      option (google.api.http) = {
-        put: "/address/{id}"
-      };
-    };
-    rpc WatchAddress(Count) returns (stream Address) {
-      option (google.api.http) = {
-        get: "/address/watch/{count}"
-      };
-    };
-}

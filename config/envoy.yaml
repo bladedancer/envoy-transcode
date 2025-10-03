@@ -34,22 +34,8 @@ static_resources:
               - "*"
               routes:
                 - match:
-                    headers:
-                      - name: ":method"
-                        string_match:
-                          exact: "GET"
                     safe_regex:
-                      "regex": "^\\Q/contact/\\E[^/]+$"
-                  route:
-                    cluster: grpc
-                    timeout: 300s
-                - match:
-                    headers:
-                      - name: ":method"
-                        string_match:
-                          exact: "GET"
-                    safe_regex:
-                      "regex": "^\\Q/basepath/address/\\E[^/]+$"
+                      "regex": "^\\Q/any\\E(/.*)?$"
                   route:
                     cluster: grpc
                     timeout: 300s
@@ -58,22 +44,9 @@ static_resources:
           - name: contact.grpc_json_transcoder
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
-              proto_descriptor: ./config/contact.pb
+              proto_descriptor: ./config/proto.pb
               services:
-                - demo.ContactService
-              match_incoming_request_route: true
-              print_options:
-                add_whitespace: true
-                always_print_primitive_fields: true
-                always_print_enums_as_ints: false
-                preserve_proto_field_names: false
-
-          - name: address.grpc_json_transcoder
-            typed_config:
-              "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
-              proto_descriptor: ./config/addressUpdated.pb
-              services:
-                - demo.AddressService
+                - demo.AnyService
               match_incoming_request_route: true
               print_options:
                 add_whitespace: true

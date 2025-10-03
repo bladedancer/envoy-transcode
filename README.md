@@ -2,7 +2,8 @@
 
 Descriptor build by maven isn't good enough.
 
-    protoc -I./proto/target/protoc-dependencies/efdb8561f44358d9ebe2a9723a7044b0 -I. --include_imports --include_source_info     --descriptor_set_out=config/proto.pb proto/src/main/proto/contact.proto
+    protoc -I./proto/target/protoc-dependencies/efdb8561f44358d9ebe2a9723a7044b0 -I. -I./proto/src/main/proto --include_imports \
+        --include_source_info --descriptor_set_out=config/proto.pb proto/src/main/proto/anything.proto
 
 Run the server:
     
@@ -27,9 +28,9 @@ Call from client (no envoy):
 
 Test with curl:
 
-    curl -ik http://localhost:19090/contact/78
+    curl -ik http://localhost:19090/any/78
 
-    curl -ik http://localhost:19090/address/510
+    curl -ik -X POST http://localhost:19090/any -H "Content-Type: application/json" -d '{"@type": "type.googleapis.com/demo.Person","name": "new","email": "new@example.com","phones": [{ "number": "1234", "type": "HOME" }]}'
 
 Envoy debug log
 

@@ -1,7 +1,6 @@
 package com.matthews.poc.transcode;
 
-import com.matthews.poc.transcode.protos.AddressServiceGrpc;
-import com.matthews.poc.transcode.protos.ContactServiceGrpc;
+import com.matthews.poc.transcode.protos.AnyServiceGrpc;
 import io.grpc.ServerBuilder;
 import io.quarkus.runtime.Startup;
 import jakarta.annotation.PostConstruct;
@@ -28,12 +27,11 @@ public class Server {
     private io.grpc.Server server;
 
     @Inject
-    public void init(final ContactServiceGrpc.ContactServiceImplBase contactService, final AddressServiceGrpc.AddressServiceImplBase addressService) {
+    public void init(final AnyServiceGrpc.AnyServiceImplBase anyService) {
         log.info("Initializing service");
         server = ServerBuilder.forPort(port)
                 .executor(Executors.newVirtualThreadPerTaskExecutor())
-                .addService(contactService)
-                .addService(addressService)
+                .addService(anyService)
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.matthews.poc.transcode;
 
+import com.google.protobuf.Any;
 import com.matthews.poc.transcode.protos.ById;
 import com.matthews.poc.transcode.protos.Person;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +24,14 @@ public class AddPerson extends BaseCommand implements Runnable {
 
     @Override
     public void run() {
-        ById id = getContactService().addPerson(Person.newBuilder()
+        ById id = getAnyService().addAny(Any.pack(Person.newBuilder()
                         .setName(name)
                         .setEmail(email)
                         .addPhones(Person.PhoneNumber.newBuilder()
                                 .setNumber(number)
                                 .setType(Person.PhoneType.HOME)
                                 .build())
-                .build());
+                .build()));
         log.info("Added person with id: {}", id.getId());
     }
 }

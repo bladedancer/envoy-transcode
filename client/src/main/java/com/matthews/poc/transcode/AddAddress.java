@@ -1,5 +1,6 @@
 package com.matthews.poc.transcode;
 
+import com.google.protobuf.Any;
 import com.matthews.poc.transcode.protos.Address;
 import com.matthews.poc.transcode.protos.ById;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class AddAddress extends BaseCommand implements Runnable {
 
     @Override
     public void run() {
-        ById id = getAddressService().addAddress(Address.newBuilder()
+        ById id = getAnyService().addAny(Any.pack(Address.newBuilder()
                 .setName(name)
                 .setHome(Address.Postal.newBuilder()
                         .setNumber(number)
@@ -41,7 +42,7 @@ public class AddAddress extends BaseCommand implements Runnable {
                         .setZip(zip)
                         .setCountry(country)
                         .build())
-                .build());
+                .build()));
         log.info("Added address with id: {}", id.getId());
     }
 }

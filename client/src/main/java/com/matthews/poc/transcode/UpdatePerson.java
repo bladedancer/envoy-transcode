@@ -1,5 +1,6 @@
 package com.matthews.poc.transcode;
 
+import com.google.protobuf.Any;
 import com.matthews.poc.transcode.protos.Person;
 import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
@@ -25,7 +26,7 @@ public class UpdatePerson extends BaseCommand implements Runnable {
 
     @Override
     public void run() {
-        getContactService().updatePerson(Person.newBuilder()
+        getAnyService().updateAny(Any.pack(Person.newBuilder()
                 .setId(id)
                 .setName(name)
                 .setEmail(email)
@@ -33,7 +34,7 @@ public class UpdatePerson extends BaseCommand implements Runnable {
                         .setNumber(number)
                         .setType(Person.PhoneType.HOME)
                         .build())
-                .build());
+                .build()));
         log.info("Updated person with id: {}", id);
     }
 }

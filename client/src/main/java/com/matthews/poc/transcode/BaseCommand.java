@@ -1,7 +1,6 @@
 package com.matthews.poc.transcode;
 
-import com.matthews.poc.transcode.protos.AddressServiceGrpc;
-import com.matthews.poc.transcode.protos.ContactServiceGrpc;
+import com.matthews.poc.transcode.protos.AnyServiceGrpc;
 import picocli.CommandLine;
 
 public class BaseCommand {
@@ -11,15 +10,9 @@ public class BaseCommand {
     @CommandLine.Option(names = {"-p", "--port"}, description = "Server port", defaultValue = "9090")
     Integer port;
 
-    protected ContactServiceGrpc.ContactServiceBlockingStub getContactService() {
-        return ContactServiceGrpc.newBlockingStub(
-                io.grpc.ManagedChannelBuilder.forAddress(hostname, port)
-                        .usePlaintext()
-                        .build());
-    }
 
-    protected AddressServiceGrpc.AddressServiceBlockingStub getAddressService() {
-        return AddressServiceGrpc.newBlockingStub(
+    protected AnyServiceGrpc.AnyServiceBlockingStub getAnyService() {
+        return AnyServiceGrpc.newBlockingStub(
                 io.grpc.ManagedChannelBuilder.forAddress(hostname, port)
                         .usePlaintext()
                         .build());

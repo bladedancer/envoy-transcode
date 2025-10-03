@@ -1,5 +1,6 @@
 package com.matthews.poc.transcode;
 
+import com.google.protobuf.Any;
 import com.matthews.poc.transcode.protos.Address;
 import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
@@ -34,7 +35,7 @@ public class UpdateAddress extends BaseCommand implements Runnable {
 
     @Override
     public void run() {
-        getAddressService().updateAddress(Address.newBuilder()
+        getAnyService().updateAny(Any.pack(Address.newBuilder()
                 .setName(name)
                 .setHome(Address.Postal.newBuilder()
                         .setNumber(number)
@@ -43,7 +44,7 @@ public class UpdateAddress extends BaseCommand implements Runnable {
                         .setZip(zip)
                         .setCountry(country)
                         .build())
-                .build());
+                .build()));
         log.info("Updated address with id: {}", id);
     }
 }

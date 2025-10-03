@@ -8,13 +8,11 @@ import picocli.CommandLine;
         GetPerson.class,
         AddPerson.class,
         UpdatePerson.class,
-        RemovePerson.class,
-        WatchPeople.class,
         GetAddress.class,
         AddAddress.class,
         UpdateAddress.class,
-        RemoveAddress.class,
-        WatchAddress.class
+        Remove.class,
+        Watch.class
 
 })
 public class Main {
